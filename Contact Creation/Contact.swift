@@ -9,6 +9,12 @@ import Foundation
 
 struct Contact {
     var name: String
+    var lastname: String
+    var fullName: String{
+        get{
+            return "\(name) \(lastname)"
+        }
+    }
     var phoneNumber: String
     var photoURL: URL? = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")
 }
