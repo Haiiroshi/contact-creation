@@ -13,6 +13,7 @@ class ContactsTableViewController: UITableViewController {
         super.viewDidLoad()
         self.title = "Contactos"
         self.tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: ContactTableViewCell.identifier)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(systemItem: .cancel)
     }
 
     // MARK: - Table view data source
@@ -22,7 +23,7 @@ class ContactsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        return 200
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -31,11 +32,14 @@ class ContactsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactTableViewCell.identifier, for: indexPath) as! ContactTableViewCell
-        let contact = Contact(name: "Juan", phoneNumber: "809-123-1234")
+        let contact = Contact(name: "Juan", phoneNumber: "809-123-1234", photoURL: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row%150 + 1).png"))
         cell.setContact(contact: contact)
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        (cell as! ContactTableViewCell).imageView!.kf.cancelDownloadTask()
+    }
 
     /*
     // Override to support conditional editing of the table view.
