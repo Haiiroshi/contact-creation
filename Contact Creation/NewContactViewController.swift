@@ -9,7 +9,7 @@ import UIKit
 
 class NewContactViewController: UIViewController {
     
-    var contact = Contact(name: "", lastname: "", phoneNumber: "")
+    var imageURL: URL? = nil
     
     let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
@@ -146,6 +146,7 @@ class NewContactViewController: UIViewController {
         self.title = "Nuevo Contacto"
         setUpBarButtonItems()
         addPhotoButton.addTarget(self, action: #selector(addPhotoButtonAction), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveButtonAction), for: .touchUpInside)
         addSubViews()
         setupLayout()
         dismissKeyboardGesture()
@@ -162,7 +163,7 @@ class NewContactViewController: UIViewController {
         keyboardFrame = self.view.convert(keyboardFrame, from: nil)
 
         var contentInset:UIEdgeInsets = self.scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height + 20
+        contentInset.bottom = keyboardFrame.size.height
         scrollView.contentInset = contentInset
     }
 
@@ -248,6 +249,11 @@ class NewContactViewController: UIViewController {
         textField.heightAnchor.constraint(equalToConstant: 32).isActive = true
     }
     
+    @objc func saveButtonAction(){
+        
+        
+    }
+    
     @objc func addPhotoButtonAction(){
         let vc = PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
         vc.photosCollectionViewControllerDelegate = self
@@ -292,7 +298,7 @@ extension NewContactViewController: UITextFieldDelegate{
 extension NewContactViewController: PhotosCollectionViewControllerDelegate{
     
     func imagePicked(imageURL: URL?) {
-        contact.photoURL = imageURL
+        self.imageURL = imageURL
         photoImageView.kf.setImage(with: imageURL)
     }
     

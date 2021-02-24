@@ -54,7 +54,7 @@ class ContactsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactTableViewCell.identifier, for: indexPath) as! ContactTableViewCell
-        let contact = Contact(name: "Juan", lastname: "Pikachu", phoneNumber: "809-123-1234", photoURL: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row%150 + 1).png"))
+        let contact = Contact(name: "Juan", lastname: "Pikachu", phoneNumber: "809-123-1234", imageURL: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row%150 + 1).png"))
         cell.setContact(contact: contact)
         return cell
     }

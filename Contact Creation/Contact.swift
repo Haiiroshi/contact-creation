@@ -16,5 +16,5 @@ struct Contact {
         }
     }
     var phoneNumber: String
-    var photoURL: URL?
+    var imageURL: URL?
 }
