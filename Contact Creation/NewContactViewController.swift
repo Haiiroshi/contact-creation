@@ -7,7 +7,17 @@
 
 import UIKit
 
-class NewContactViewController: UIViewController, UITextFieldDelegate {
+class NewContactViewController: UIViewController {
+    
+    var contact = Contact(name: "", lastname: "", phoneNumber: "")
+    
+    let scrollView: UIScrollView = {
+        let view = UIScrollView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.frame = view.bounds
+        return view
+    }()
+    
     
     let headerView: UIView = {
         let view = UIView()
@@ -19,6 +29,7 @@ class NewContactViewController: UIViewController, UITextFieldDelegate {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.gray
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         return imageView
@@ -70,6 +81,7 @@ class NewContactViewController: UIViewController, UITextFieldDelegate {
     
     private let phoneNumberTextField: UITextField = {
         let textField = UITextField()
+        textField.keyboardType = .numberPad
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Teléfono"
         return textField
@@ -126,6 +138,8 @@ class NewContactViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.lightGray
@@ -135,23 +149,48 @@ class NewContactViewController: UIViewController, UITextFieldDelegate {
         addSubViews()
         setupLayout()
         dismissKeyboardGesture()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification) {
+
+        guard let userInfo = notification.userInfo else { return }
+        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height + 20
+        scrollView.contentInset = contentInset
+    }
+
+    @objc func keyboardWillHide(notification:NSNotification) {
+
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
     }
     
     func addSubViews(){
-        self.view.addSubview(headerView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(headerView)
         headerView.addSubview(photoImageView)
         headerView.addSubview(addPhotoButton)
-        stackView.addArrangedSubview(firstView)
+        
         firstView.addSubview(nameTitleLabel)
         firstView.addSubview(nameTextField)
         secondView.addSubview(lastNameTitleLabel)
         secondView.addSubview(lastNameTextField)
         thirdView.addSubview(phoneNumberTitleLabel)
         thirdView.addSubview(phoneNumberTextField)
+        
+        stackView.addArrangedSubview(firstView)
         stackView.addArrangedSubview(secondView)
         stackView.addArrangedSubview(thirdView)
-        self.view.addSubview(stackView)
-        self.view.addSubview(saveButton)
+        
+        scrollView.addSubview(stackView)
+        scrollView.addSubview(saveButton)
     }
     
     func setUpBarButtonItems(){
@@ -160,9 +199,17 @@ class NewContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupLayout(){
-        headerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        headerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        scrollView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
+        
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        headerView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        headerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         headerView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         
         photoImageView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 32).isActive = true
@@ -175,14 +222,16 @@ class NewContactViewController: UIViewController, UITextFieldDelegate {
         addPhotoButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
         
         stackView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 12).isActive = true
-        stackView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
-        stackView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
+        stackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         stackView.heightAnchor.constraint(equalToConstant: 80*3).isActive = true
         
+        saveButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 12).isActive = true
+        saveButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        saveButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32).isActive = true
         saveButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        saveButton.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 12).isActive = true
-        saveButton.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -12).isActive = true
-        saveButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
+        saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         
         setupSubView(contentView: firstView, label: nameTitleLabel, textField: nameTextField)
         setupSubView(contentView: secondView, label: lastNameTitleLabel, textField: lastNameTextField)
@@ -200,7 +249,9 @@ class NewContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func addPhotoButtonAction(){
-        
+        let vc = PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        vc.photosCollectionViewControllerDelegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func cancelButtonAction(){
@@ -215,19 +266,34 @@ class NewContactViewController: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
     
+    
+}
+
+
+extension NewContactViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let newString = textField.text! + string
+        let regEx: String
+        if textField.keyboardType == .numberPad{
+            regEx = "[0-9]{0,12}"
+        }else{
+            regEx = "[A-Za-z]{0,32}"
+        }
+        let predicate = NSPredicate(format:"SELF MATCHES %@", regEx)
+        return predicate.evaluate(with: newString)
+    }
+}
+
+extension NewContactViewController: PhotosCollectionViewControllerDelegate{
+    
+    func imagePicked(imageURL: URL?) {
+        contact.photoURL = imageURL
+        photoImageView.kf.setImage(with: imageURL)
+    }
     
 }

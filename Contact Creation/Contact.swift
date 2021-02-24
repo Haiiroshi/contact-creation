@@ -16,5 +16,5 @@ struct Contact {
         }
     }
     var phoneNumber: String
-    var photoURL: URL? = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png")
+    var photoURL: URL?
 }

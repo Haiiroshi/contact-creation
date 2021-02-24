@@ -35,7 +35,7 @@ class ContactsTableViewController: UITableViewController {
     }
     
     @objc func addButtonAction(){
-        let vc = PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())//NewContactViewController() //hardcode
+        let vc = NewContactViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     // MARK: - Table view data source

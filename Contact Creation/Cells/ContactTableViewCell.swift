@@ -58,7 +58,7 @@ class ContactTableViewCell: UITableViewCell {
         photoImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         photoImageView.heightAnchor.constraint(equalToConstant: photoImageViewSize).isActive = true
         photoImageView.widthAnchor.constraint(equalToConstant: photoImageViewSize).isActive = true
-        photoImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12).isActive = true
+        photoImageView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 12).isActive = true
         
         nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -16).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: photoImageView.rightAnchor, constant: 12).isActive = true
