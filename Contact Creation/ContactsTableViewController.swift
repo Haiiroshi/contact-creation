@@ -26,8 +26,8 @@ class ContactsTableViewController: UITableViewController {
         deleteBarButton.customView?.widthAnchor.constraint(equalToConstant: 20).isActive = true
         deleteBarButton.customView?.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonAction))
-        navigationItem.rightBarButtonItems = [add, deleteBarButton]
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonAction))
+        navigationItem.rightBarButtonItems = [addButton, deleteBarButton]
     }
     
     @objc func deleteButtonAction(){
@@ -35,7 +35,8 @@ class ContactsTableViewController: UITableViewController {
     }
     
     @objc func addButtonAction(){
-        print("add foooo")
+        let vc = NewContactViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     // MARK: - Table view data source
     
