@@ -73,7 +73,7 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let url = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row%150 + 1).png")
+        let url: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row%150 + 1).png"
         if let delegate = self.photosCollectionViewControllerDelegate{
             delegate.imagePicked(imageURL: url)
             self.navigationController?.popViewController(animated: true)

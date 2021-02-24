@@ -15,6 +15,7 @@
 		85271F9525E6E81E00F6CBB4 /* PhotosCollectionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85271F9425E6E81E00F6CBB4 /* PhotosCollectionViewControllerDelegate.swift */; };
 		85271FB725E6FFF500F6CBB4 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85271F7B25E6B74100F6CBB4 /* Contact.swift */; };
 		85271FBB25E7002B00F6CBB4 /* Contact_Creation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85271FB925E7002B00F6CBB4 /* Contact_Creation.xcdatamodeld */; };
+		85271FDB25E7098000F6CBB4 /* NewContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85271FDA25E7098000F6CBB4 /* NewContactDelegate.swift */; };
 		85BE945C25E6A141000CC2AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE945B25E6A141000CC2AD /* AppDelegate.swift */; };
 		85BE945E25E6A141000CC2AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE945D25E6A141000CC2AD /* SceneDelegate.swift */; };
 		85BE946325E6A141000CC2AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85BE946125E6A141000CC2AD /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 		85271F8E25E6DD2900F6CBB4 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		85271F9425E6E81E00F6CBB4 /* PhotosCollectionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewControllerDelegate.swift; sourceTree = "<group>"; };
 		85271FBA25E7002B00F6CBB4 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		85271FDA25E7098000F6CBB4 /* NewContactDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactDelegate.swift; sourceTree = "<group>"; };
 		85BE945825E6A141000CC2AD /* Contact Creation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Contact Creation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BE945B25E6A141000CC2AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85BE945D25E6A141000CC2AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				85271F7E25E6C96600F6CBB4 /* NewContactViewController.swift */,
 				85271F8B25E6DCF200F6CBB4 /* PhotosCollectionViewController.swift */,
 				85271F9425E6E81E00F6CBB4 /* PhotosCollectionViewControllerDelegate.swift */,
+				85271FDA25E7098000F6CBB4 /* NewContactDelegate.swift */,
 				85271F7B25E6B74100F6CBB4 /* Contact.swift */,
 				85271FB925E7002B00F6CBB4 /* Contact_Creation.xcdatamodeld */,
 				85BE946125E6A141000CC2AD /* Main.storyboard */,
@@ -235,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85271FB725E6FFF500F6CBB4 /* Contact.swift in Sources */,
+				85271FDB25E7098000F6CBB4 /* NewContactDelegate.swift in Sources */,
 				85271F7925E6AE4D00F6CBB4 /* ContactTableViewCell.swift in Sources */,
 				85271F8F25E6DD2900F6CBB4 /* PhotoCollectionViewCell.swift in Sources */,
 				85271F9525E6E81E00F6CBB4 /* PhotosCollectionViewControllerDelegate.swift in Sources */,

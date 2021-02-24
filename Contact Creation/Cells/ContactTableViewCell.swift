@@ -70,7 +70,9 @@ class ContactTableViewCell: UITableViewCell {
     }
     
     func setContact(contact: Contact){
-        photoImageView.kf.setImage(with: contact.imageURL)
+        if let imageURL = URL(string: contact.imageURL){
+            photoImageView.kf.setImage(with: imageURL)
+        }
         nameLabel.text = contact.fullName
         phoneLabel.text = contact.phoneNumber
     }

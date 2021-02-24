@@ -9,7 +9,8 @@ import UIKit
 
 class NewContactViewController: UIViewController {
     
-    var imageURL: URL? = nil
+    var delegate: NewContactDelegate?
+    var imageURL: String = ""
     
     let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
@@ -157,18 +158,18 @@ class NewContactViewController: UIViewController {
     }
     
     @objc func keyboardWillShow(notification:NSNotification) {
-
+        
         guard let userInfo = notification.userInfo else { return }
         var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-
+        
         var contentInset:UIEdgeInsets = self.scrollView.contentInset
         contentInset.bottom = keyboardFrame.size.height
         scrollView.contentInset = contentInset
     }
-
+    
     @objc func keyboardWillHide(notification:NSNotification) {
-
+        
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
     }
@@ -250,8 +251,14 @@ class NewContactViewController: UIViewController {
     }
     
     @objc func saveButtonAction(){
-        
-        
+        let contact = Contact(name: nameTextField.text ?? "",
+                              lastname: lastNameTextField.text ?? "",
+                              phoneNumber: phoneNumberTextField.text ?? "",
+                              imageURL: imageURL)
+        if let delegate =  self.delegate{
+            delegate.saveNewContact(contact: contact)
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func addPhotoButtonAction(){
@@ -297,9 +304,10 @@ extension NewContactViewController: UITextFieldDelegate{
 
 extension NewContactViewController: PhotosCollectionViewControllerDelegate{
     
-    func imagePicked(imageURL: URL?) {
+    func imagePicked(imageURL: String) {
         self.imageURL = imageURL
-        photoImageView.kf.setImage(with: imageURL)
+        let url = URL(string: imageURL)
+        photoImageView.kf.setImage(with: url)
     }
     
 }

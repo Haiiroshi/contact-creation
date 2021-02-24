@@ -10,7 +10,7 @@ import UIKit
 
 protocol PhotosCollectionViewControllerDelegate{
     
-    func imagePicked(imageURL: URL?)
+    func imagePicked(imageURL: String)
     
 }
     
