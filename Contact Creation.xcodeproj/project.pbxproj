@@ -14,9 +14,12 @@
 		85BE946625E6A141000CC2AD /* Contact_Creation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85BE946425E6A141000CC2AD /* Contact_Creation.xcdatamodeld */; };
 		85BE946825E6A141000CC2AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85BE946725E6A141000CC2AD /* Assets.xcassets */; };
 		85BE946B25E6A141000CC2AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85BE946925E6A141000CC2AD /* LaunchScreen.storyboard */; };
+		8B740964B6E629FA26667EB8 /* Pods_Contact_Creation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3EF8047B56DD1206852678B /* Pods_Contact_Creation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D6F608170E8F029B00FC817 /* Pods-Contact Creation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contact Creation.debug.xcconfig"; path = "Target Support Files/Pods-Contact Creation/Pods-Contact Creation.debug.xcconfig"; sourceTree = "<group>"; };
+		6CFC5B85A7B5AE5C8B73DCD5 /* Pods-Contact Creation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contact Creation.release.xcconfig"; path = "Target Support Files/Pods-Contact Creation/Pods-Contact Creation.release.xcconfig"; sourceTree = "<group>"; };
 		85BE945825E6A141000CC2AD /* Contact Creation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Contact Creation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BE945B25E6A141000CC2AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85BE945D25E6A141000CC2AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +29,7 @@
 		85BE946725E6A141000CC2AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85BE946A25E6A141000CC2AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85BE946C25E6A141000CC2AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3EF8047B56DD1206852678B /* Pods_Contact_Creation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Contact_Creation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +37,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B740964B6E629FA26667EB8 /* Pods_Contact_Creation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14C06387C0DBE8B99E6A8796 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F3EF8047B56DD1206852678B /* Pods_Contact_Creation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		85BE944F25E6A141000CC2AD = {
 			isa = PBXGroup;
 			children = (
 				85BE945A25E6A141000CC2AD /* Contact Creation */,
 				85BE945925E6A141000CC2AD /* Products */,
+				F1EFA89D5115EA5A11DD8CA5 /* Pods */,
+				14C06387C0DBE8B99E6A8796 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,6 +85,16 @@
 			path = "Contact Creation";
 			sourceTree = "<group>";
 		};
+		F1EFA89D5115EA5A11DD8CA5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4D6F608170E8F029B00FC817 /* Pods-Contact Creation.debug.xcconfig */,
+				6CFC5B85A7B5AE5C8B73DCD5 /* Pods-Contact Creation.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,9 +102,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 85BE946F25E6A141000CC2AD /* Build configuration list for PBXNativeTarget "Contact Creation" */;
 			buildPhases = (
+				46ED91B007D3A3AB42C73CFC /* [CP] Check Pods Manifest.lock */,
 				85BE945425E6A141000CC2AD /* Sources */,
 				85BE945525E6A141000CC2AD /* Frameworks */,
 				85BE945625E6A141000CC2AD /* Resources */,
+				D1A938A2E86DA4AE144BD9E6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -134,6 +161,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		46ED91B007D3A3AB42C73CFC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Contact Creation-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D1A938A2E86DA4AE144BD9E6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Contact Creation/Pods-Contact Creation-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Contact Creation/Pods-Contact Creation-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Contact Creation/Pods-Contact Creation-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		85BE945425E6A141000CC2AD /* Sources */ = {
@@ -287,6 +356,7 @@
 		};
 		85BE947025E6A141000CC2AD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D6F608170E8F029B00FC817 /* Pods-Contact Creation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -306,6 +376,7 @@
 		};
 		85BE947125E6A141000CC2AD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CFC5B85A7B5AE5C8B73DCD5 /* Pods-Contact Creation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
