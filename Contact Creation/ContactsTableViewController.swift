@@ -35,7 +35,7 @@ class ContactsTableViewController: UITableViewController {
     }
     
     @objc func addButtonAction(){
-        let vc = PhotosCollectionViewController()//NewContactViewController() //hardcode
+        let vc = PhotosCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())//NewContactViewController() //hardcode
         self.navigationController?.pushViewController(vc, animated: true)
     }
     // MARK: - Table view data source
@@ -60,7 +60,7 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        (cell as! ContactTableViewCell).imageView!.kf.cancelDownloadTask()
+        (cell as! ContactTableViewCell).photoImageView.kf.cancelDownloadTask()
     }
     
     /*

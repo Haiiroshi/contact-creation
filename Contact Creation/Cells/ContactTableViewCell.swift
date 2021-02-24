@@ -15,7 +15,7 @@ class ContactTableViewCell: UITableViewCell {
     static let identifier: String = ContactTableViewCell.description()
     
     
-    private let photoImageView: UIImageView = {
+    let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.lightGray
         imageView.translatesAutoresizingMaskIntoConstraints = false
