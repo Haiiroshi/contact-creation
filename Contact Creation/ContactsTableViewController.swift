@@ -6,22 +6,45 @@
 //
 
 import UIKit
+import CoreData
 
 class ContactsTableViewController: UITableViewController {
+    
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var items: [ContactEntity] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(ContactTableViewCell.self, forCellReuseIdentifier: ContactTableViewCell.identifier)
         self.title = "Mis Contactos"
         setUpBarButtonItems()
+        
+        // Get items from Core Data
+        fetchContacts()
+        
+        let newContact = ContactEntity(context: context)
+        newContact.name = "Lola"
+        newContact.lastName = "marola"
+        newContact.imageURL = ""
+        newContact.phoneNumber = "88888888"
+        
+        //Save Data
+        do{
+            try self.context.save()
+        }catch{
+            print("guay")
+        }
+        
+        self.fetchContacts()
     }
-
+    
     func setUpBarButtonItems(){
         let deleteButton = UIButton(type: .custom)
         let trashIcon = UIImage(imageLiteralResourceName: "trash").withRenderingMode(.alwaysTemplate)
         deleteButton.setImage(trashIcon, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteButtonAction), for: .touchUpInside)
-
+        
         let deleteBarButton = UIBarButtonItem(customView: deleteButton)
         deleteBarButton.customView?.widthAnchor.constraint(equalToConstant: 20).isActive = true
         deleteBarButton.customView?.heightAnchor.constraint(equalToConstant: 24).isActive = true
@@ -30,8 +53,21 @@ class ContactsTableViewController: UITableViewController {
         navigationItem.rightBarButtonItems = [addButton, deleteBarButton]
     }
     
+    func fetchContacts(){
+        do{
+            self.items = (try context.fetch(ContactEntity.fetchRequest()) as? [ContactEntity]) ?? []
+            DispatchQueue.main.async{
+                self.tableView.reloadData()
+            }
+        }
+        catch{
+            
+        }
+    }
+    
     @objc func deleteButtonAction(){
         print("foooo")
+        //TODO
     }
     
     @objc func addButtonAction(){
@@ -45,7 +81,7 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 200
+        return self.items.count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -54,7 +90,7 @@ class ContactsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactTableViewCell.identifier, for: indexPath) as! ContactTableViewCell
-        let contact = Contact(name: "Juan", lastname: "Pikachu", phoneNumber: "809-123-1234", imageURL: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row%150 + 1).png"))
+        let contact = Contact(contact: items[indexPath.row])
         cell.setContact(contact: contact)
         return cell
     }
