@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Contact Creation/Contact+CoreDataClass.swift">
-   </FileRef>
-   <FileRef
-      location = "group:Contact Creation/Contact+CoreDataProperties.swift">
-   </FileRef>
-   <FileRef
       location = "group:Contact Creation.xcodeproj">
    </FileRef>
    <FileRef
