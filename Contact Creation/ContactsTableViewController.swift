@@ -51,9 +51,8 @@ class ContactsTableViewController: UITableViewController {
     }
     
     @objc func deleteButtonAction(){
-        print("foooo")
-        //TODO
-    }
+        self.tableView.isEditing = !self.tableView.isEditing
+  }
     
     @objc func addButtonAction(){
         let vc = NewContactViewController()
@@ -81,8 +80,26 @@ class ContactsTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let contactToRemove = self.items[indexPath.row]
+            self.context.delete(contactToRemove)
+            do{
+                try self.context.save()
+            }catch{
+                
+            }
+            
+            self.fetchContacts()
+         }
+    }
+
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        (cell as! ContactTableViewCell).photoImageView.kf.cancelDownloadTask()
+//        (cell as! ContactTableViewCell).photoImageView.kf.cancelDownloadTask()
     }
     
 }

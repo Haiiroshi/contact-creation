@@ -13,8 +13,7 @@ fileprivate let photoImageViewSize: CGFloat = 100 - 12*2
 class ContactTableViewCell: UITableViewCell {
     
     static let identifier: String = ContactTableViewCell.description()
-    
-    
+  
     let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.lightGray
@@ -39,6 +38,17 @@ class ContactTableViewCell: UITableViewCell {
         return label
     }()
     
+//    private let deleteButton: UIButton = {
+//        let button = UIButton()
+//        button.backgroundColor = UIColor.red
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.setTitle("-", for: .normal)
+//        button.setTitleColor(UIColor.white, for: .normal)
+//        button.clipsToBounds = true
+//        button.layer.cornerRadius = 16
+//        return button
+//    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -51,6 +61,7 @@ class ContactTableViewCell: UITableViewCell {
         contentView.addSubview(photoImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(phoneLabel)
+//        contentView.addSubview(deleteButton)
         setupLayout()
     }
     
@@ -58,8 +69,9 @@ class ContactTableViewCell: UITableViewCell {
         photoImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         photoImageView.heightAnchor.constraint(equalToConstant: photoImageViewSize).isActive = true
         photoImageView.widthAnchor.constraint(equalToConstant: photoImageViewSize).isActive = true
-        photoImageView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 12).isActive = true
         
+
+        photoImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 12).isActive = true
         nameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -16).isActive = true
         nameLabel.leftAnchor.constraint(equalTo: photoImageView.rightAnchor, constant: 12).isActive = true
         nameLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12).isActive = true
@@ -67,7 +79,10 @@ class ContactTableViewCell: UITableViewCell {
         phoneLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 16).isActive = true
         phoneLabel.leftAnchor.constraint(equalTo: photoImageView.rightAnchor, constant: 12).isActive = true
         phoneLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12).isActive = true
+        
     }
+
+
     
     func setContact(contact: Contact){
         if let imageURL = URL(string: contact.imageURL){
@@ -75,7 +90,11 @@ class ContactTableViewCell: UITableViewCell {
         }
         nameLabel.text = contact.fullName
         phoneLabel.text = contact.phoneNumber
+        
+//        deleteButton.isHidden = self.editingStyle != .delete
     }
+    
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
