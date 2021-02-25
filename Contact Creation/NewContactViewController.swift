@@ -158,6 +158,8 @@ class NewContactViewController: UIViewController {
         
         if let contact = self.contact{
             setContact(contact: contact)
+        }else{
+            imageURL = ""
         }
     }
     
@@ -274,10 +276,18 @@ class NewContactViewController: UIViewController {
                               lastname: lastNameTextField.text ?? "",
                               phoneNumber: phoneNumberTextField.text ?? "",
                               imageURL: imageURL)
-        if let delegate =  self.delegate{
+        if contact.fullName == "" && contact.phoneNumber == ""{
+            showEmptyAlert()
+        }else if let delegate =  self.delegate{
             delegate.saveNewContact(contact: contact)
             self.navigationController?.popViewController(animated: true)
         }
+    }
+    
+    func showEmptyAlert(){
+        let alertController = UIAlertController(title: "Error", message: "Debe ingresar al menos un campo", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @objc func addPhotoButtonAction(){

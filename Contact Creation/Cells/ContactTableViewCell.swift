@@ -38,16 +38,6 @@ class ContactTableViewCell: UITableViewCell {
         return label
     }()
     
-//    private let deleteButton: UIButton = {
-//        let button = UIButton()
-//        button.backgroundColor = UIColor.red
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setTitle("-", for: .normal)
-//        button.setTitleColor(UIColor.white, for: .normal)
-//        button.clipsToBounds = true
-//        button.layer.cornerRadius = 16
-//        return button
-//    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -61,8 +51,7 @@ class ContactTableViewCell: UITableViewCell {
         contentView.addSubview(photoImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(phoneLabel)
-//        contentView.addSubview(deleteButton)
-        setupLayout()
+       setupLayout()
     }
     
     func setupLayout(){
@@ -81,17 +70,15 @@ class ContactTableViewCell: UITableViewCell {
         phoneLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12).isActive = true
         
     }
-
-
     
     func setContact(contact: Contact){
         if let imageURL = contact.imageURL{
             photoImageView.kf.setImage(with: imageURL)
+        }else{
+            photoImageView.image = nil
         }
         nameLabel.text = contact.fullName
         phoneLabel.text = contact.phoneNumber
-        
-//        deleteButton.isHidden = self.editingStyle != .delete
     }
     
 
