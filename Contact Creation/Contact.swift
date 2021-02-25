@@ -12,7 +12,7 @@ struct Contact {
     var lastname: String
     var fullName: String{
         get{
-            return "\(name) \(lastname)"
+            return "\(name) \(lastname)".capitalized
         }
     }
     var phoneNumber: String

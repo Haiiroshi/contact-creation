@@ -157,18 +157,22 @@ class NewContactViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
         
         if let contact = self.contact{
-            nameTextField.text = contact.name
-            lastNameTextField.text = contact.lastname
-            photoImageView.kf.setImage(with: contact.imageURL)
-            phoneNumberTextField.text = contact.phoneNumber
-            self.title = contact.fullName
-            addPhotoButton.isHidden = true
-            nameTextField.isUserInteractionEnabled = false
-            lastNameTextField.isUserInteractionEnabled = false
-            phoneNumberTextField.isUserInteractionEnabled = false
-            saveButton.isHidden = true
-            self.navigationItem.leftBarButtonItem = nil
+            setContact(contact: contact)
         }
+    }
+    
+    func setContact(contact: Contact){
+        nameTextField.text = contact.name.capitalized
+        lastNameTextField.text = contact.lastname.capitalized
+        photoImageView.kf.setImage(with: contact.imageURL)
+        phoneNumberTextField.text = contact.phoneNumber
+        self.title = contact.fullName
+        addPhotoButton.isHidden = true
+        nameTextField.isUserInteractionEnabled = false
+        lastNameTextField.isUserInteractionEnabled = false
+        phoneNumberTextField.isUserInteractionEnabled = false
+        saveButton.isHidden = true
+        self.navigationItem.leftBarButtonItem = nil
     }
     
     @objc func keyboardWillShow(notification:NSNotification) {

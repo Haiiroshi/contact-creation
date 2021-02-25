@@ -44,6 +44,7 @@ class ContactsTableViewController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         self.tableView.tableFooterView = UIView()
+        
     }
     
     func setUpBarButtonItems(){
@@ -82,8 +83,14 @@ class ContactsTableViewController: UITableViewController {
             }
         }
         catch{
-            
+            showCoreDataErrorAlert()
         }
+    }
+    
+    func showCoreDataErrorAlert(){
+        let alertController = UIAlertController(title: "Error", message: "Se ha producido un error al guardar los cambios. Vuelva a intentarlo", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @objc func deleteButtonAction(){
@@ -151,7 +158,7 @@ class ContactsTableViewController: UITableViewController {
             do{
                 try self.context.save()
             }catch{
-                
+                showCoreDataErrorAlert()
             }
             self.fetchContacts()
         }
@@ -180,15 +187,15 @@ class ContactsTableViewController: UITableViewController {
 extension ContactsTableViewController: NewContactDelegate{
     func saveNewContact(contact: Contact) {
         let newContact = ContactEntity(context: context)
-        newContact.name = contact.name
-        newContact.lastName = contact.lastname
+        newContact.name = contact.name.lowercased()
+        newContact.lastName = contact.lastname.lowercased()
         newContact.imageURL =  contact.imageURLString
         newContact.phoneNumber = contact.phoneNumber
         //Save Data
         do{
             try self.context.save()
         }catch{
-            print("guay")
+            showCoreDataErrorAlert()
         }
         self.fetchContacts()
     }
