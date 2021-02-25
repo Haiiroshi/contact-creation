@@ -176,7 +176,7 @@ class ContactsTableViewController: UITableViewController {
     func filterContentForSearchText(_ searchText: String) {
         filteredItems = items.filter { (contact: ContactEntity) -> Bool in
             let contact = Contact(contact: contact)
-            return contact.fullName.lowercased().contains(searchText.lowercased())
+            return "\(contact.fullName)\(contact.phoneNumber)".lowercased().contains(searchText.lowercased())
         }
         tableView.reloadData()
     }
