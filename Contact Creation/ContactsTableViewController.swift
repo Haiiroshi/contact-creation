@@ -43,6 +43,7 @@ class ContactsTableViewController: UITableViewController {
         searchController.searchBar.placeholder = "Search Candies"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        self.tableView.tableFooterView = UIView()
     }
     
     func setUpBarButtonItems(){
@@ -115,6 +116,7 @@ class ContactsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactTableViewCell.identifier, for: indexPath) as! ContactTableViewCell
+        cell.selectionStyle = .none
         let contact: Contact
         if isFiltering {
             contact = Contact(contact: filteredItems[indexPath.row])
@@ -123,6 +125,18 @@ class ContactsTableViewController: UITableViewController {
         }
         cell.setContact(contact: contact)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let contact: Contact
+        if isFiltering {
+            contact = Contact(contact: filteredItems[indexPath.row])
+        } else {
+            contact = Contact(contact: items[indexPath.row])
+        }
+        let vc = NewContactViewController()
+        vc.contact = contact
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -168,7 +182,7 @@ extension ContactsTableViewController: NewContactDelegate{
         let newContact = ContactEntity(context: context)
         newContact.name = contact.name
         newContact.lastName = contact.lastname
-        newContact.imageURL =  contact.imageURL
+        newContact.imageURL =  contact.imageURLString
         newContact.phoneNumber = contact.phoneNumber
         //Save Data
         do{

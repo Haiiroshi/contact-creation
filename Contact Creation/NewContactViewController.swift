@@ -11,6 +11,7 @@ class NewContactViewController: UIViewController {
     
     var delegate: NewContactDelegate?
     var imageURL: String = ""
+    var contact: Contact?
     
     let scrollView: UIScrollView = {
         let view = UIScrollView(frame: .zero)
@@ -155,6 +156,19 @@ class NewContactViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
         
+        if let contact = self.contact{
+            nameTextField.text = contact.name
+            lastNameTextField.text = contact.lastname
+            photoImageView.kf.setImage(with: contact.imageURL)
+            phoneNumberTextField.text = contact.phoneNumber
+            self.title = contact.fullName
+            addPhotoButton.isHidden = true
+            nameTextField.isUserInteractionEnabled = false
+            lastNameTextField.isUserInteractionEnabled = false
+            phoneNumberTextField.isUserInteractionEnabled = false
+            saveButton.isHidden = true
+            self.navigationItem.leftBarButtonItem = nil
+        }
     }
     
     @objc func keyboardWillShow(notification:NSNotification) {
@@ -217,6 +231,7 @@ class NewContactViewController: UIViewController {
         photoImageView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 32).isActive = true
         photoImageView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
         photoImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        photoImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         addPhotoButton.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
         addPhotoButton.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 12).isActive = true

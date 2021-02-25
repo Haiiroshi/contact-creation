@@ -16,12 +16,17 @@ struct Contact {
         }
     }
     var phoneNumber: String
-    var imageURL: String
+    var imageURLString: String
+    var imageURL: URL?{
+        get{
+            return URL(string: self.imageURLString)
+        }
+    }
     
     init(contact: ContactEntity){
         self.name = contact.name ?? ""
         self.lastname = contact.lastName ?? ""
-        self.imageURL = contact.imageURL ?? ""
+        self.imageURLString = contact.imageURL ?? ""
         self.phoneNumber = contact.phoneNumber ?? ""
     }
     
@@ -29,7 +34,7 @@ struct Contact {
         self.name = name
         self.lastname = lastname
         self.phoneNumber = phoneNumber
-        self.imageURL = imageURL ?? ""
+        self.imageURLString = imageURL ?? ""
     }
     
 }
