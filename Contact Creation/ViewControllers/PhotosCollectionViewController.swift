@@ -51,7 +51,7 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
-        let url = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row + 1).png")
+        let url = URL(string: getURL(for: indexPath))
         cell.setPhoto(url: url)
         return cell
     }
@@ -73,11 +73,16 @@ class PhotosCollectionViewController: UICollectionViewController, UICollectionVi
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let url: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row + 1).png"
+        let url: String = getURL(for: indexPath)
         if let delegate = self.photosCollectionViewControllerDelegate{
             delegate.imagePicked(imageURL: url)
             self.navigationController?.popViewController(animated: true)
         }
+    }
+    
+    func getURL(for indexPath: IndexPath) -> String{
+        //url of the public API for the pictures
+        return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(indexPath.row + 1).png"
     }
     
     // MARK: UICollectionViewDelegate
