@@ -75,6 +75,34 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		85271FE225E7323100F6CBB4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				85271F9425E6E81E00F6CBB4 /* PhotosCollectionViewControllerDelegate.swift */,
+				85271FDA25E7098000F6CBB4 /* NewContactDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		85271FE425E7328100F6CBB4 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				85271F7425E6AE0200F6CBB4 /* ContactsTableViewController.swift */,
+				85271F7E25E6C96600F6CBB4 /* NewContactViewController.swift */,
+				85271F8B25E6DCF200F6CBB4 /* PhotosCollectionViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		85271FE625E7328E00F6CBB4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				85271F7B25E6B74100F6CBB4 /* Contact.swift */,
+				85271FB925E7002B00F6CBB4 /* Contact_Creation.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		85BE944F25E6A141000CC2AD = {
 			isa = PBXGroup;
 			children = (
@@ -98,17 +126,13 @@
 			children = (
 				85BE945B25E6A141000CC2AD /* AppDelegate.swift */,
 				85BE945D25E6A141000CC2AD /* SceneDelegate.swift */,
-				85271F7425E6AE0200F6CBB4 /* ContactsTableViewController.swift */,
-				85271F7E25E6C96600F6CBB4 /* NewContactViewController.swift */,
-				85271F8B25E6DCF200F6CBB4 /* PhotosCollectionViewController.swift */,
-				85271F9425E6E81E00F6CBB4 /* PhotosCollectionViewControllerDelegate.swift */,
-				85271FDA25E7098000F6CBB4 /* NewContactDelegate.swift */,
-				85271F7B25E6B74100F6CBB4 /* Contact.swift */,
-				85271FB925E7002B00F6CBB4 /* Contact_Creation.xcdatamodeld */,
 				85BE946125E6A141000CC2AD /* Main.storyboard */,
 				85BE946725E6A141000CC2AD /* Assets.xcassets */,
 				85BE946925E6A141000CC2AD /* LaunchScreen.storyboard */,
 				85BE946C25E6A141000CC2AD /* Info.plist */,
+				85271FE425E7328100F6CBB4 /* ViewControllers */,
+				85271FE625E7328E00F6CBB4 /* Model */,
+				85271FE225E7323100F6CBB4 /* Protocols */,
 				85271F9125E6DD4400F6CBB4 /* Cells */,
 			);
 			path = "Contact Creation";
