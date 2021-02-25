@@ -276,7 +276,8 @@ class NewContactViewController: UIViewController {
                               lastname: lastNameTextField.text ?? "",
                               phoneNumber: phoneNumberTextField.text ?? "",
                               imageURL: imageURL)
-        if contact.fullName == "" && contact.phoneNumber == ""{
+        if contact.name == "" && contact.lastname == "" && contact.phoneNumber == ""{
+            
             showEmptyAlert()
         }else if let delegate =  self.delegate{
             delegate.saveNewContact(contact: contact)
