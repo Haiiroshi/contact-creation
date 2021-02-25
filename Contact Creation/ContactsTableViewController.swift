@@ -40,7 +40,9 @@ class ContactsTableViewController: UITableViewController {
     
     func fetchContacts(){
         do{
-            self.items = (try context.fetch(ContactEntity.fetchRequest()) as? [ContactEntity]) ?? []
+            //saving sort contacts in self.items, this can be improved by saving the contacts sorted in the database
+            self.items = ((try context.fetch(ContactEntity.fetchRequest()) as? [ContactEntity]) ?? [])
+                .sorted(by: {"\($0.name ?? "")\($0.lastName ?? "")" > "\($1.name ?? "")\($1.lastName ?? "")"})
             DispatchQueue.main.async{
                 self.tableView.reloadData()
             }
@@ -99,7 +101,7 @@ class ContactsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        (cell as! ContactTableViewCell).photoImageView.kf.cancelDownloadTask()
+        (cell as! ContactTableViewCell).photoImageView.kf.cancelDownloadTask()
     }
     
 }
