@@ -13,6 +13,21 @@ class ContactsTableViewController: UITableViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var items: [ContactEntity] = []
+    var filteredItems: [ContactEntity] = []
+    var deleteBarButton: UIBarButtonItem!
+    var addButton: UIBarButtonItem!
+    var doneButton: UIBarButtonItem!
+    let searchController = UISearchController(searchResultsController: nil)
+    
+    var isSearchBarEmpty: Bool {
+        get{
+            return searchController.searchBar.text?.isEmpty ?? true
+        }
+    }
+    
+    var isFiltering: Bool {
+        return searchController.isActive && !isSearchBarEmpty
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +37,12 @@ class ContactsTableViewController: UITableViewController {
         
         // Get items from Core Data
         fetchContacts()
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Candies"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     func setUpBarButtonItems(){
@@ -30,19 +51,31 @@ class ContactsTableViewController: UITableViewController {
         deleteButton.setImage(trashIcon, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteButtonAction), for: .touchUpInside)
         
-        let deleteBarButton = UIBarButtonItem(customView: deleteButton)
+        self.deleteBarButton = UIBarButtonItem(customView: deleteButton)
         deleteBarButton.customView?.widthAnchor.constraint(equalToConstant: 20).isActive = true
         deleteBarButton.customView?.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonAction))
+        self.addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonAction))
+        self.doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(deleteButtonAction))
         navigationItem.rightBarButtonItems = [addButton, deleteBarButton]
+    }
+    
+    func updateBarButtonItems(){
+        if tableView.isEditing{
+            navigationItem.rightBarButtonItems = [doneButton]
+        }else{
+            navigationItem.rightBarButtonItems = [addButton, deleteBarButton]
+        }
     }
     
     func fetchContacts(){
         do{
             //saving sort contacts in self.items, this can be improved by saving the contacts sorted in the database
             self.items = ((try context.fetch(ContactEntity.fetchRequest()) as? [ContactEntity]) ?? [])
-                .sorted(by: {"\($0.name ?? "")\($0.lastName ?? "")" > "\($1.name ?? "")\($1.lastName ?? "")"})
+                .sorted(by: { Contact(contact: $0).fullName < Contact(contact: $1).fullName })
+            if isFiltering{
+                filterContentForSearchText(searchController.searchBar.text?.lowercased() ?? "")
+            }
             DispatchQueue.main.async{
                 self.tableView.reloadData()
             }
@@ -54,7 +87,8 @@ class ContactsTableViewController: UITableViewController {
     
     @objc func deleteButtonAction(){
         self.tableView.isEditing = !self.tableView.isEditing
-  }
+        updateBarButtonItems()
+    }
     
     @objc func addButtonAction(){
         let vc = NewContactViewController()
@@ -68,7 +102,11 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        if isFiltering {
+            return filteredItems.count
+        }else{
+            return items.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -77,31 +115,49 @@ class ContactsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactTableViewCell.identifier, for: indexPath) as! ContactTableViewCell
-        let contact = Contact(contact: items[indexPath.row])
+        let contact: Contact
+        if isFiltering {
+            contact = Contact(contact: filteredItems[indexPath.row])
+        } else {
+            contact = Contact(contact: items[indexPath.row])
+        }
         cell.setContact(contact: contact)
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let contactToRemove = self.items[indexPath.row]
+            let contactToRemove: ContactEntity
+            if isFiltering {
+                contactToRemove = filteredItems[indexPath.row]
+            } else {
+                contactToRemove = items[indexPath.row]
+            }
             self.context.delete(contactToRemove)
             do{
                 try self.context.save()
             }catch{
                 
             }
-            
             self.fetchContacts()
-         }
+        }
     }
-
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return tableView.isEditing
+    }
+    
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        //if cell not in displaying stop download of the image
         (cell as! ContactTableViewCell).photoImageView.kf.cancelDownloadTask()
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        filteredItems = items.filter { (contact: ContactEntity) -> Bool in
+            let contact = Contact(contact: contact)
+            return contact.fullName.lowercased().contains(searchText.lowercased())
+        }
+        tableView.reloadData()
     }
     
 }
@@ -120,9 +176,17 @@ extension ContactsTableViewController: NewContactDelegate{
         }catch{
             print("guay")
         }
-        
         self.fetchContacts()
     }
     
+}
+
+
+extension ContactsTableViewController: UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let searchText = (searchBar.text ?? "").lowercased()
+        filterContentForSearchText(searchText)
+    }
     
 }
